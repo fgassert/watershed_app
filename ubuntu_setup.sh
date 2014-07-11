@@ -11,8 +11,8 @@ sudo apt-get install -y python-pip
 sudo pip install virtualenv
 
 sudo apt-get install -y apache2-mpm-worker apache2-dev
-sudo apt-get install -y valibapache2-mod-wsgi
-echo "LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so" > wsgi.load
+sudo apt-get install -y libapache2-mod-wsgi
+#echo "LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so" > wsgi.load
 sudo mv wsgi.load /etc/apache2/mods-available/
 sudo a2enmod wsgi
 sudo a2dissite default
