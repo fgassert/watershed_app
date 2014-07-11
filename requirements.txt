@@ -1,7 +1,7 @@
 
 
 django
-gdal
+gdal==1.9.0
 affine
 git+https://github.com/mapbox/rasterio.git#egg=rasterio
 fiona
