@@ -7,3 +7,5 @@ gdal
 affine
 git+https://github.com/mapbox/rasterio.git#egg=rasterio
 fiona
+git+https://github.com/fgassert/watershed.py.git#egg=watershed
+
