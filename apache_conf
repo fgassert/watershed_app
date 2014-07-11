@@ -1,4 +1,4 @@
-<VirtualHost *:8080>
+<VirtualHost *:80>
 ServerAdmin root@md.cc
 ServerName md.cc
 
