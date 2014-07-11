@@ -1,17 +1,19 @@
+#!/bin/bash
 
 sudo apt-get install -y git
 sudo apt-get install -y gcc g++
 sudo apt-get install -y python python-dev python-software-properties
 sudo add-apt-repository -y ppa:ubuntugis/ppa
 sudo apt-get update -qq
-
+sudo apt-get install -y p7zip
 sudo apt-get install -y gdal-bin libgdal-dev python-gdal
 sudo apt-get install -y python-pip
 sudo pip install virtualenv
 
 sudo apt-get install -y apache2-mpm-worker apache2-dev
 sudo apt-get install -y valibapache2-mod-wsgi
-sudo apt-get install -y p7zip
+echo "LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so" > wsgi.load
+sudo mv wsgi.load /etc/apache2/mods-available/
 sudo a2enmod wsgi
 sudo a2dissite default
 
