@@ -1,0 +1,24 @@
+<VirtualHost *:8080>
+ServerAdmin root@md.cc
+ServerName md.cc
+
+CustomLog "|/usr/sbin/rotatelogs /srv/watershed_app/logs/access.log.%Y%m%d-%H%M%S 5M" combined
+ErrorLog "|/usr/sbin/rotatelogs /srv/watershed_app/logs/error.log.%Y%m%d-%H%M%S 5M"
+LogLevel warn
+
+WSGIDaemonProcess md.cc user=DJANGO_APP group=DJANGO_APP processes=1 threads=15 maximum-requests=10000 python-path=/srv/TESTING/lib/python2.7/site-packages
+WSGIProcessGroup md.cc
+WSGIScriptAlias / /srv/watershed_app/app/wsgi.py
+
+<Directory /srv/watershed_app/cache/>
+Order deny,allow
+Allow from all
+Options -Indexes FollowSymLinks
+</Directory>
+
+<Directory /srv/watershed_app/app/>
+Order deny,allow
+Allow from all
+</Directory>
+
+</VirtualHost>
