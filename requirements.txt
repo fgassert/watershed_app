@@ -1,0 +1,9 @@
+
+django
+Cython==0.20
+setuptools
+numpy
+gdal
+affine
+git+https://github.com/mapbox/rasterio.git#egg=rasterio
+fiona
