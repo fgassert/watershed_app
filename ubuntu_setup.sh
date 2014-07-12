@@ -1,47 +1,49 @@
 #!/bin/bash
 
-sudo apt-get install -y git
-sudo apt-get install -y gcc g++
-sudo apt-get install -y python 
-sudo apt-get install python-dev python-software-properties
-sudo add-apt-repository -y ppa:ubuntugis/ppa
-sudo apt-get update -qq
-sudo apt-get install -y p7zip
-sudo apt-get install -y gdal-bin libgdal-dev python-gdal
-sudo apt-get install -y python-pip
-sudo pip install virtualenv
+sudo su
 
-sudo apt-get install -y apache2-mpm-worker apache2-dev apache2-utils
-sudo apt-get install -y libapache2-mod-wsgi
-sudo a2enmod wsgi
-sudo a2enmod headers
-sudo a2dissite default
+apt-get install -y git
+apt-get install -y gcc 
+apt-get install -y g++
+apt-get install -y python 
+apt-get install python-dev python-software-properties
+add-apt-repository -y ppa:ubuntugis/ppa
+apt-get update -qq
+apt-get install -y p7zip
+apt-get install -y gdal-bin libgdal-dev python-gdal
+apt-get install -y python-pip
+pip install virtualenv
+
+apt-get install -y apache2-mpm-worker apache2-dev apache2-utils
+apt-get install -y libapache2-mod-wsgi
+a2enmod wsgi
+a2enmod headers
+a2dissite default
 
 cd /srv/
-sudo virtualenv TESTING
+virtualenv TESTING
 source TESTING/bin/activate
-
 
 export C_INCLUDE_PATH=/usr/include/gdal
 export CPLUS_INCLUDE_PATH=/usr/include/gdal
-sudo git clone https://github.com/fgassert/watershed_app.git
-sudo pip install -r watershed_app/requirements-dev.txt
-sudo pip install -r watershed_app/requirements.txt
+git clone https://github.com/fgassert/watershed_app.git
+pip install -r watershed_app/requirements-dev.txt
+pip install -r watershed_app/requirements.txt
 
 
-sudo useradd --system --no-create-home --home-dir /srv/watershed_app --user-group DJANGO_APP
-sudo chsh -s /bin/bash DJANGO_APP
+useradd --system --no-create-home --home-dir /srv/watershed_app --user-group DJANGO_APP
+chsh -s /bin/bash DJANGO_APP
 
-sudo mkdir watershed_app/logs
-sudo wget http://md.cc.s3.amazonaws.com/tmp/assets.7z
-sudo p7zip -d assets.7z
-sudo mv assets /srv/watershed_app/
+mkdir watershed_app/logs
+wget http://md.cc.s3.amazonaws.com/tmp/assets.7z
+p7zip -d assets.7z
+mv assets /srv/watershed_app/
 
-sudo mv watershed_app/apache_conf /etc/apache2/sites-available/md.cc.conf
+mv watershed_app/apache_conf /etc/apache2/sites-available/md.cc.conf
 
-sudo a2ensite md.cc
+a2ensite md.cc
 
-sudo chown -R DJANGO_APP:DJANGO_APP /srv/watershed_app/
+chown -R DJANGO_APP:DJANGO_APP /srv/watershed_app/
 
-sudo service apache2 restart
+service apache2 restart
 
