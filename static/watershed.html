@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Basemaps</title>
+	<title>Watershed delineation</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -28,13 +28,24 @@ height:100%;
 	  
 	  var apiurl = 'http://54.86.253.5/';
 
-	  var c = function(e) { 
-	  var u = apiurl + '?loc=' + e.latlng.lat + ',' + e.latlng.lng + 
-	  '&d=' + (.5/Math.pow(2,map.getZoom())) + '&f=json'; 
+	  var get_watershed = function(e) { 
+	  var u = apiurl + '?loc=' + e.latlng.lng + ',' + e.latlng.lat + 
+	  '&d=' + (4/Math.pow(2,map.getZoom())) + '&f=json'; 
 	  watershed.loadURL(u);
 	  };
 
-	  map.on({click:c});
+	  var popup = L.popup();
+	  var show_download = function(e) {
+	  var lat = watershed._geojson.features[0].properties.pour_lat;
+	  var lng = watershed._geojson.features[0].properties.pour_long;
+	  var u = apiurl + '?loc=' + lng + ',' + lat + '&d=0&f=zip'; 
+	  popup.setLatLng([lat,lng])
+	  .setContent('Download <a href="'+u+'"> shapefile</a>')
+	  .openOn(map);
+	  };
+
+	  map.on({click:get_watershed});
+	  watershed.on({click:show_download});
 
 	</script>
 </body>

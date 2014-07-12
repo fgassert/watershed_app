@@ -12,7 +12,7 @@ CONTENT_TYPES = {'zip':'application/zip',
 gzip_middleware = GZipMiddleware()
 
 def get_watershed(r):
-#    try:
+    try:
         if r.method == 'GET':
             opts = r.GET
         elif r.method == 'POST':
@@ -25,6 +25,7 @@ def get_watershed(r):
             force = False
             if 'd' in opts.keys():
                 snap = float(opts['d'])
+            if f == 'shp': f = 'zip'
             if 'f' in opts.keys():
                 f = opts['f']
             if 'force' in opts.keys():
@@ -43,5 +44,5 @@ def get_watershed(r):
                         res['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_name)
                         return res
         return HttpResponse("Invalid request", status=400)
-#    except:
+    except:
         return HttpResponse("Invalid request: ERROR", status=400)
