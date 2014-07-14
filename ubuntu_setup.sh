@@ -1,12 +1,10 @@
 #!/bin/bash
 
-sudo su
-
 apt-get install -y git
 apt-get install -y gcc 
 apt-get install -y g++
 apt-get install -y python 
-apt-get install python-dev python-software-properties
+apt-get install -y python-dev python-software-properties
 add-apt-repository -y ppa:ubuntugis/ppa
 apt-get update -qq
 apt-get install -y p7zip
@@ -19,6 +17,7 @@ apt-get install -y libapache2-mod-wsgi
 a2enmod wsgi
 a2enmod headers
 a2dissite default
+a2dissite 000-default
 
 cd /srv/
 virtualenv TESTING
@@ -27,6 +26,7 @@ source TESTING/bin/activate
 export C_INCLUDE_PATH=/usr/include/gdal
 export CPLUS_INCLUDE_PATH=/usr/include/gdal
 git clone https://github.com/fgassert/watershed_app.git
+pip install numpy
 pip install -r watershed_app/requirements-dev.txt
 pip install -r watershed_app/requirements.txt
 
@@ -40,6 +40,7 @@ p7zip -d assets.7z
 mv assets /srv/watershed_app/
 
 mv watershed_app/apache_conf /etc/apache2/sites-available/md.cc.conf
+echo 'Header set Access-Control-Allow-Origin "*"' >> /etc/apache2/apache2.conf
 
 a2ensite md.cc
 
