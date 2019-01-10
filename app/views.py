@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.middleware.gzip import GZipMiddleware
-import cached_watershed
+from . import cached_watershed
 import json
 import os
 
@@ -12,7 +12,7 @@ CONTENT_TYPES = {'zip':'application/zip',
 gzip_middleware = GZipMiddleware()
 
 def get_watershed(r):
-    try:
+    #try:
         if r.method == 'GET':
             opts = r.GET
         elif r.method == 'POST':
@@ -44,5 +44,5 @@ def get_watershed(r):
                         res['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_name)
                         return res
         return HttpResponse("Invalid request", status=400)
-    except:
-        return HttpResponse("Invalid request: ERROR", status=400)
+    #except:
+        #return HttpResponse("Invalid request: ERROR", status=400)

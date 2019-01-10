@@ -1,6 +1,4 @@
-from django.conf.urls import patterns, include, url
-import views
+from django.conf.urls import url, re_path
+from . import views
 
-urlpatterns = patterns('',
-                       url(r'^$', views.get_watershed, name='get_watershed'),
-)
+urlpatterns = [re_path(r'^$', views.get_watershed, name='get_watershed')]
